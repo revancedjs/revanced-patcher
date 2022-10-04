@@ -1,7 +1,7 @@
 export function _constant(type, register, value) {
 	return {
 		type: 'instruction',
-		instructions: [`const${type !== null ? type : ''}`, register, value]
+		instructions: [`const${type !== null ? type : ''}`, `${register},`, value]
 	};
 }
 

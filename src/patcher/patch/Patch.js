@@ -1,6 +1,6 @@
 import { toObject, toSmali } from '../../smaliParser/parser.js';
 import { writeFileSync } from 'node:fs';
-import Instructions from '../../smaliParser/Instructions.js';
+import * as Instructions from '../../smaliParser/Instructions.js';
 
 class Patch {
 	constructor(options) {
