@@ -1,11 +1,13 @@
 import { toObject, toSmali } from '../../smaliParser/parser.js';
 import { writeFileSync } from 'node:fs';
+import Instructions from '../../smaliParser/Instructions.js';
 
 class Patch {
 	constructor(options) {
 		this.smaliObj = options.smaliObject;
 		this.index = options.index;
 		this.path = options.path;
+		this.instructions = Instructions;
 	}
 
 	insertInstruction(index, instruction) {

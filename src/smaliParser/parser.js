@@ -82,7 +82,7 @@ function toSmali(arrayObject) {
 		switch (instruction.type) {
 		case 'type': {
 			const inst = instruction.types.join(' ');
-			smaliFile += `${EOL}${EOL}${inst}${EOL}`;
+			smaliFile += `${inst}${EOL}`;
 			break;
 		}
 
