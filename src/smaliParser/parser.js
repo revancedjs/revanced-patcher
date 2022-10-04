@@ -38,7 +38,8 @@ function toObject(src) {
 				}
 
 				if (isParsing) {
-					if (!instruction.endsWith('},') || !instruction.endsWith('"')) parsedWord += instruction + ' '; 
+					if (!instruction.endsWith('},') || !instruction.endsWith('"'))
+						parsedWord += instruction + ' ';
 					indexs.push(i);
 				}
 

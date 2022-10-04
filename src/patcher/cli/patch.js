@@ -1,6 +1,7 @@
 import { existsSync } from 'node:fs';
 import patch from '../patch/index.js';
 import { join } from 'node:path';
+import { exec } from 'node:child_process';
 
 export default async function Patch(args) {
 	let bundle;
@@ -21,17 +22,27 @@ export default async function Patch(args) {
 		}
 	}
 
-	// TODO: implement APKTool decoding.
-	for (const patchBundle of bundle.default) {
-		if (args.e && args.e.includes(patchBundle.name)) {
-			console.log(`Ignoring patch ${patchBundle.name}: Already excluded.`);
-			continue;
+	const decodeProcess = exec(
+		`apktool d -o ${join(process.cwd(), 'revancedjs-cache')} --no-res ${join(
+			process.cwd(),
+			args.a
+		)}`
+	);
+	decodeProcess.stdout.on('data', (msg) => console.log(msg.toString()));
+	decodeProcess.stderr.on('data', (msg) => console.error(msg.toString()));
+
+	decodeProcess.on('close', () => {
+		for (const patchBundle of bundle.default) {
+			if (args.e && args.e.includes(patchBundle.name)) {
+				console.log(`Ignoring patch ${patchBundle.name}: Already excluded.`);
+				continue;
+			}
+
+			patch(patchBundle);
 		}
 
-		patch(patchBundle.default);
-	}
+		console.log('Finished patching.');
+	});
 
-	console.log('Finished patching.');
-
-    // TODO: implement building + signing
+	// TODO: implement building + signing
 }
